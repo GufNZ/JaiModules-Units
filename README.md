@@ -4,7 +4,7 @@ A module to define types representing various combinations of SI units, and oper
 
 ### Overview
 
-The `Units` module provides compile-time unit type safety with zero runtime overhead.  Unit types are parameterized by:
+The `Units` module provides compile-time unit type safety with zero runtime overhead.  Unit types are parameterised by:
 
 - **Exponents** (Exp) - dimensional power (e.g., 2 for m²)
 - **Ratios** (Num/Denom) - scale factors (e.g., Num=1000 for kilometers)
@@ -42,7 +42,7 @@ m := Meters(float).{100};
 km := boxSI(Kilometers(float), unboxSI(m));  // Kilometers(0.1)
 ```
 
-### Operator Behavior
+### Operator Behaviour
 
 #### Same-Type Arithmetic (Zero Overhead)
 
@@ -112,10 +112,10 @@ Higher-level predicates:
 #### Polymorph Detection (`isSIQuantityType`)
 
 The function checks both:
-1. **Polymorph source** - if it's a specialization of the SIQuantity generic struct.
+1. **Polymorph source** - if it's a specialisation of the SIQuantity generic struct.
 2. **Direct struct name** - if the type is literally named "SIQuantity".
 
-This handles both concrete instances (e.g., `Meters(float64)` created via `#insert SI(...)`) and direct parameterized references.
+This handles both concrete instances (e.g., `Meters(float64)` created via `#insert SI(...)`) and direct parameterised references.
 
 ### Consistency Notes
 
@@ -134,10 +134,10 @@ This handles both concrete instances (e.g., `Meters(float64)` created via `#inse
 All arithmetic operators are implemented via:
 
 1. **Fast path** (exact same-type) - Direct arithmetic, `#modify` guard returns `false` to select this overload
-2. **Slow path** (mixed-ratio) - `#modify` computes conversion constants and bakes them into operator specialization
+2. **Slow path** (mixed-ratio) - `#modify` computes conversion constants and bakes them into operator specialisation
 3. **Rejection path** (invalid) - `#modify` returns `false` with diagnostic message when operation is semantic invalid (e.g., offset in multiply)
 
 The `#modify` guards ensure:
 - No runtime cost for same-type operations
-- One-time constant computation per polymorphic specialization
+- One-time constant computation per polymorphic specialisation
 - Clear error messages when operations are rejected
